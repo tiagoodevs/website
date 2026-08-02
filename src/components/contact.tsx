@@ -64,7 +64,7 @@ export default function Contact() {
             <div className="mt-3 flex flex-wrap items-center justify-center gap-3">
               <a
                 href="https://discord.com/users/901562525294927932"
-                className="inline-flex items-center gap-2 rounded-xl border-2 border-transparent px-15 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-80 [background:linear-gradient(to_bottom,#5865F2,#8a94fd)_padding-box,linear-gradient(to_bottom,#ffffff,#8a94fd)_border-box]"
+                className="inline-flex items-center gap-2 rounded-xl border-2 border-transparent px-15 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-80 [background:linear-gradient(to_bottom,#5865F2,#8a94fd)_padding-box,linear-gradient(to_bottom,#97a0fc,#8a94fd)_border-box]"
               >
                 <DiscordIcon size={20} />
                 Shoot me a DM!
