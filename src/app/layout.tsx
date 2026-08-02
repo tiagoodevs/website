@@ -1,7 +1,8 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
-import "./globals.css";
 import { ConsoleWarning } from "@/components/warning";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Inter({
   variable: "--font-geist-sans",
@@ -78,6 +79,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <ConsoleWarning />
         {children}
+        <Analytics />
       </body>
     </html>
   );
