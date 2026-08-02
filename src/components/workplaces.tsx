@@ -26,7 +26,7 @@ const currentWorkplaces: Workplace[] = [
     {
         role: "COO",
         company: "Paddlewheel Inc.",
-        description: "A tech company where I oversee day-to-day operations.",
+        description: "Oversees the company's day-to-day operations, manages teams and projects, and works closely with leadership on company-wide decisions. Also contributes directly to development, infrastructure, and other technical work when needed.",
         joinDate: new Date(2026, 6),
         image: "paddlewheel",
         brandColor: "#139d8e",
@@ -39,7 +39,7 @@ const currentWorkplaces: Workplace[] = [
         role: "Director",
         company: "Monitry Ltd.",
         description:
-            "A monitoring service in the vein of BetterUptime, where I also oversee day-to-day operations.",
+            "Oversees day-to-day operations, manages the team, and contributes to product and organizational decisions. Works across the company to coordinate projects and ensure the platform continues to develop effectively.",
         joinDate: new Date(2026, 4),
         image: "monitry",
         brandColor: "#263d6e",
@@ -50,10 +50,24 @@ const currentWorkplaces: Workplace[] = [
         },
     },
     {
+        role: "Vice President",
+        company: "Five Fries",
+        description:
+            "Serves as the President's second-in-command, assisting with organizational operations, overseeing departments, and carrying out initiatives delegated by the President. Also contributes directly to development and can make operational decisions when necessary.",
+        joinDate: new Date(2026, 6),
+        image: "fivefries",
+        brandColor: "#D21033",
+        links: {
+            website: "https://fivefries.xyz",
+            discord: "https://discord.gg/UFPNjVPxgg",
+            roblox: "https://www.roblox.com/communities/470420343/Banify",
+        },
+    },
+    {
         role: "Vice Director",
         company: "Almore Shopping",
         description:
-            "A Roblox retail game, where I work alongside the executive director to execute development tasks.",
+            "Works as the Executive Director's right-hand, helping oversee the organization and its staff while contributing directly to development. Handles a wide range of development tasks and supports the Executive Director with day-to-day operations.",
         joinDate: new Date(2025, 8),
         image: "almore",
         brandColor: "#590113",
@@ -66,7 +80,7 @@ const currentWorkplaces: Workplace[] = [
         role: "Operations Executive",
         company: "Glixera Innovations",
         description:
-            "A Roblox tech company selling a range of systems, where I oversee operations.",
+            "Oversees the company's operations across teams, projects, and internal processes. Works with staff, manages organizational tasks, and makes operational decisions to keep the company running effectively.",
         joinDate: new Date(2025, 3),
         image: "glixera",
         brandColor: "#000000",
@@ -81,7 +95,7 @@ const pastWorkplaces: Workplace[] = [
     {
         role: "Maintainer",
         company: "Orbit",
-        description: "A human resources management (HRM) platform for Roblox.",
+        description: "Maintained and improved the Orbit HRM platform, keeping the platform up to date, accessible, and easy to use. Worked across the project on development, infrastructure, community needs, and contributor coordination, including reviewing issues and pull requests.",
         joinDate: new Date(2026, 0),
         leaveDate: new Date(2026, 6),
         image: "orbit",
@@ -97,7 +111,7 @@ const pastWorkplaces: Workplace[] = [
         role: "Developer",
         company: "Freshly Shopping UK",
         description:
-            "A Roblox retail game, where I worked alongside the leadership team to build systems for the community.",
+            "Worked alongside the leadership team to develop and improve systems for the community. Contributed features including an appeals center rework, ban integration, car wash system, and other gameplay and administrative systems, while also contributing suggestions for new features and improvements.",
         joinDate: new Date(2025, 10),
         leaveDate: new Date(2026, 0),
         image: "freshly",
@@ -182,7 +196,8 @@ function WorkplaceCard({ item }: { item: Workplace }) {
                     <img
                         src={`/companies/${item.image}.png`}
                         alt={item.company}
-                        className="size-6 shrink-0 opacity-30 invert transition-all duration-300 group-hover:opacity-100 group-hover:invert-0"
+                        className="shrink-0 opacity-30 invert transition-all duration-300 group-hover:opacity-100 group-hover:invert-0"
+                        width="36"
                     />
                     <p className="text-xl text-foreground transition-colors duration-300 group-hover:text-white">
                         {item.role}{" "}
