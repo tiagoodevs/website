@@ -177,7 +177,7 @@ function WorkplaceCard({ item }: { item: Workplace }) {
             style={{ "--brand": item.brandColor } as React.CSSProperties}
             className="group relative flex flex-col overflow-hidden rounded-2xl bg-white/80 p-5 shadow-[0_1px_2px_rgba(0,0,0,0.03)] ring-1 ring-black/4 transition-colors duration-300 hover:bg-(--brand) sm:p-6"
         >
-            <div className="flex-col sm:flex-row items-start justify-between gap-4">
+            <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
                 <div className="flex items-center gap-2">
                     <img
                         src={`/companies/${item.image}.png`}
@@ -193,7 +193,7 @@ function WorkplaceCard({ item }: { item: Workplace }) {
                     </p>
                 </div>
 
-                <p className="shrink-0 whitespace-nowrap sm:pl-4 pt-4 sm:pt-0 font-mono text-xs tracking-wide text-foreground/35 transition-colors duration-300 group-hover:text-white/55">
+                <p className="shrink-0 whitespace-nowrap sm:pl-4 pt-0 sm:pt-0 font-mono text-xs tracking-wide text-foreground/35 transition-colors duration-300 group-hover:text-white/55">
                     {dateRange(item)}
                 </p>
             </div>
