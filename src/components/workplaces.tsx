@@ -54,7 +54,7 @@ const currentWorkplaces: Workplace[] = [
         company: "DRS",
         description:
             "Handles development and infrastructure work for the company, including server access management, permissions, and backend systems. Also contributes Roblox scripting for gameplay features and UI systems used across the platform.",
-        joinDate: new Date(2026, 9),
+        joinDate: new Date(2026, 7),
         image: "drs",
         brandColor: "#090b2a",
         links: {
