@@ -50,6 +50,20 @@ const currentWorkplaces: Workplace[] = [
         },
     },
     {
+        role: "Developer",
+        company: "DRS",
+        description:
+            "Handles development and infrastructure work for the company, including server access management, permissions, and backend systems. Also contributes Roblox scripting for gameplay features and UI systems used across the platform.",
+        joinDate: new Date(2026, 9),
+        image: "drs",
+        brandColor: "#090b2a",
+        links: {
+            roblox: "https://www.roblox.com/communities/12734419/Direct-Retail-Solutions",
+            discord: "https://discord.gg/drs",
+            website: "https://directretailsolutions.com"
+        },
+    },
+    {
         role: "Vice President",
         company: "Five Fries",
         description:
