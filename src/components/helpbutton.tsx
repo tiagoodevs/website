@@ -20,7 +20,7 @@ type HelpLauncherProps = {
 };
 
 export default function HelpLauncher({
-  email = "hello@example.com",
+  email = "tiagu.1789@gmail.com",
   resumeUrl = "/resume.pdf",
   githubUrl = "https://github.com/breadddevv",
   linkedinUrl = "https://www.linkedin.com/in/tiago-santos-b72b463ba/",
