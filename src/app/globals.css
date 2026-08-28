@@ -20,7 +20,7 @@
   --color-muted: var(--muted);
   --color-accent: var(--accent);
   --color-accent-light: var(--accent-light);
-  --font-sans: var(--font-jakarta);
+  --font-sans: var(--font-inter);
   --font-inter: var(--font-inter);
   --font-mono: var(--font-mono);
 }

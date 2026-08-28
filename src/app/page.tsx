@@ -11,10 +11,10 @@ import HelpLauncher from "@/components/helpbutton";
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen font-inter flex flex-col">
       <HelpLauncher />
-      <Navbar />
-      <main className="flex-1">
+      <main className="flex-1 font-inter">
+        <Navbar />
         <Hero />
         <div className="mx-auto max-w-6xl px-6 sm:px-10 lg:px-16">
           <About />

@@ -69,11 +69,10 @@ export default function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b transition-all duration-300 ${
-        scrolled
+      className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${scrolled
           ? "border-border bg-background/80 backdrop-blur-xl"
           : "border-transparent bg-transparent"
-      }`}
+        }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" className="text-lg font-bold tracking-tight text-foreground">
@@ -107,9 +106,8 @@ export default function Navbar() {
                   setActive(link.href);
                   document.getElementById(link.href.slice(1))?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className={`relative z-10 px-4 py-1.5 text-sm font-medium transition-colors ${
-                  active === link.href ? "text-foreground" : "text-muted hover:text-foreground/70"
-                }`}
+                className={`relative z-10 px-4 py-1.5 text-sm font-medium transition-colors ${active === link.href ? "text-foreground" : "text-muted hover:text-foreground/70"
+                  }`}
               >
                 {link.label}
               </a>
@@ -154,11 +152,10 @@ export default function Navbar() {
                     setActive(link.href);
                     document.getElementById(link.href.slice(1))?.scrollIntoView({ behavior: "smooth" });
                   }}
-                  className={`rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
-                    active === link.href
+                  className={`rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${active === link.href
                       ? "bg-accent/8 text-accent"
                       : "text-foreground/70 hover:bg-card-hover hover:text-foreground"
-                  }`}
+                    }`}
                 >
                   {link.label}
                 </a>

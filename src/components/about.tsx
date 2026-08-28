@@ -67,7 +67,7 @@ export default function About() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.4 }}
-            className="mt-3 font-sans text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
+            className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
           >
             Building products that feel clear and considered.
           </motion.h2>

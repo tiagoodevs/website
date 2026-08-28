@@ -22,8 +22,8 @@ type HelpLauncherProps = {
 export default function HelpLauncher({
   email = "hello@example.com",
   resumeUrl = "/resume.pdf",
-  githubUrl = "https://github.com/yourhandle",
-  linkedinUrl = "https://linkedin.com/in/yourhandle",
+  githubUrl = "https://github.com/breadddevv",
+  linkedinUrl = "https://www.linkedin.com/in/tiago-santos-b72b463ba/",
 }: HelpLauncherProps) {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
