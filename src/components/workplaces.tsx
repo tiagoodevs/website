@@ -1,8 +1,9 @@
 "use client";
 
-import { DiscordIcon, GitHubIcon, RobloxIcon } from "@/lib/icons";
+import IconResolve from "@/lib/icons";
 import { motion } from "framer-motion";
 import { Globe } from "lucide-react";
+import { siDiscord, siGithub, siRoblox } from "simple-icons";
 
 type WorkplaceLinks = {
     discord?: string;
@@ -240,17 +241,17 @@ function WorkplaceCard({ item }: { item: Workplace }) {
                     )}
                     {links.discord && (
                         <WorkplaceLinkIcon href={links.discord} label={`${item.company} Discord`}>
-                            <DiscordIcon size={16} />
+                            <IconResolve size={16} icon={siDiscord} />
                         </WorkplaceLinkIcon>
                     )}
                     {links.roblox && (
                         <WorkplaceLinkIcon href={links.roblox} label={`${item.company} on Roblox`}>
-                            <RobloxIcon size={16} />
+                            <IconResolve size={16} icon={siRoblox} />
                         </WorkplaceLinkIcon>
                     )}
                     {links.github && (
                         <WorkplaceLinkIcon href={links.github} label={`${item.company} GitHub`}>
-                            <GitHubIcon size={16} />
+                            <IconResolve size={16} icon={siGithub} />
                         </WorkplaceLinkIcon>
                     )}
                 </div>

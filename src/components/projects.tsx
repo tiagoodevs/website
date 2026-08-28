@@ -4,7 +4,8 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { toKebabCase } from "@/lib/utils";
-import { DiscordIcon, GitHubIcon } from "@/lib/icons";
+import IconResolve from "@/lib/icons";
+import { siDiscord, siGithub } from "simple-icons";
 
 type Project = {
   name: string;
@@ -160,7 +161,7 @@ function ProjectCard({ project }: { project: Project }) {
               aria-label={`${project.title} on GitHub`}
               className="rounded-lg p-2 text-foreground/40 transition-colors hover:bg-foreground/5 hover:text-foreground"
             >
-              <GitHubIcon size={18} />
+              <IconResolve size={18} icon={siGithub} />
             </a>
           ) : null}
           {project.discord ? (
@@ -171,7 +172,7 @@ function ProjectCard({ project }: { project: Project }) {
               aria-label={`${project.title}'s Support Server`}
               className="rounded-lg p-2 text-foreground/40 transition-colors hover:bg-foreground/5 hover:text-foreground"
             >
-              <DiscordIcon size={18} />
+              <IconResolve size={18} icon={siDiscord} />
             </a>
           ) : null}
           {project.demo ? (

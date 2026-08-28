@@ -1,8 +1,9 @@
 "use client";
 
-import { DiscordIcon } from "@/lib/icons";
+import IconResolve from "@/lib/icons";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Mail } from "lucide-react";
+import { siDiscord } from "simple-icons";
 
 const EMAIL = "hello@breaddevv.cc";
 
@@ -66,7 +67,7 @@ export default function Contact() {
                 href="https://discord.com/users/901562525294927932"
                 className="inline-flex items-center gap-2 rounded-xl border-2 border-transparent px-15 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-80 [background:linear-gradient(to_bottom,#5865F2,#8a94fd)_padding-box,linear-gradient(to_bottom,#8791fa,#8a94fd)_border-box]"
               >
-                <DiscordIcon size={20} />
+                <IconResolve size={20} icon={siDiscord} />
                 Shoot me a DM!
               </a>
             </div>

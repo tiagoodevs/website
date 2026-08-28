@@ -1,16 +1,21 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import { ConsoleWarning } from "@/components/warning";
 import { Analytics } from "@vercel/analytics/next";
 
-const geistSans = Inter({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = JetBrains_Mono({
-  variable: "--font-geist-mono",
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
+  subsets: ["latin"],
+});
+
+const mono = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
 });
 
@@ -73,10 +78,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${jakarta.variable} ${mono.variable} h-full antialiased`}
     >
-      <meta content="#F3F3F3" data-react-helmet="true" name="theme-color" />
-      <body className="min-h-full flex flex-col">
+      <meta content="#fafafa" data-react-helmet="true" name="theme-color" />
+      <body className="min-h-full">
         <ConsoleWarning />
         {children}
         <Analytics />
