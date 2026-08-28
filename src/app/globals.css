@@ -61,6 +61,14 @@ body {
   opacity: 0.35;
 }
 
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari, Opera */
+}
+
 /* Section label */
 .section-label {
   font-family: var(--font-mono), monospace;

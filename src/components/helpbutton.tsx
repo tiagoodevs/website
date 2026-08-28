@@ -74,7 +74,7 @@ export default function HelpLauncher({
             className="absolute bottom-16 right-0 w-[320px] rounded-2xl border border-border bg-background/95 p-3 shadow-xl backdrop-blur-xl"
           >
             {/* quick nav strip */}
-            <div className="mb-3 flex gap-1.5 overflow-x-auto pb-1">
+            <div className="mb-3 flex gap-1.5 overflow-x-auto scrollbar-hide pb-1">
               {sections.map((s) => (
                 <button
                   key={s.href}
