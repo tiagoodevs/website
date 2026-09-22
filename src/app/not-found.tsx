@@ -10,7 +10,7 @@ export default function Home() {
             <div className="flex flex-col items-start w-full max-w-xl gap-3 sm:gap-4">
                 <div className="relative w-full h-40 sm:h-52 md:h-60 rounded-2xl overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.03)] ring-1 ring-black/4">
                     <Image
-                        src={"/notfound/ah-itsmehi.gif"}
+                        src={"/notfound/ah-hi.gif"}
                         alt="404 illustration"
                         fill
                         sizes={'(max-width: 640px) 100vw, 576px'}
