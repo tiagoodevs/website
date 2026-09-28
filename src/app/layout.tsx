@@ -1,32 +1,36 @@
-import "./globals.css";
-import type { Metadata } from "next";
-import { Inter, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
-import { ConsoleWarning } from "@/components/warning";
+import type { Metadata, Viewport } from "next";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import Providers from "@/components/providers";
+import { ConsoleWarning } from "@/components/warning";
+import { site } from "@/content/site";
+import { themeScript } from "@/lib/theme";
+import "./globals.css";
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-});
-
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
-  subsets: ["latin"],
+  display: "swap",
 });
 
 const mono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Tiago's Portfolio",
-  description:
-    "Portfolio of Tiago Santos, a full-stack developer and multimedia technician from Portugal. Explore projects, experience, open-source work, and UI/UX design.",
+  metadataBase: new URL(site.url),
+  title: {
+    default: site.title,
+    template: `%s · ${site.name}`,
+  },
+  description: site.description,
+  applicationName: site.name,
   keywords: [
     "Tiago Santos",
-    "Bread",
     "breaddevv",
+    "tiagodevs",
     "Full-Stack Developer",
     "Software Engineer",
     "Web Developer",
@@ -36,55 +40,107 @@ export const metadata: Metadata = {
     "Node.js",
     "UI/UX",
     "Portfolio",
+    "Portugal",
   ],
-  authors: [{ name: "Tiago Santos" }],
-  creator: "Tiago Santos",
-  publisher: "Tiago Santos",
-  metadataBase: new URL("https://breaddevv.cc"),
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  publisher: site.name,
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Tiago's Portfolio",
-    description:
-      "Explore my portfolio featuring full-stack web development, UI/UX design, open-source projects, and professional experience.",
-    url: "https://breaddevv.cc",
-    siteName: "Tiago's Portfolio",
-    locale: "en_US",
     type: "website",
-    images: [
-    {
-      url: "/og.png",
-      width: 1920,
-      height: 1080,
-      alt: "Tiago Santos Portfolio",
-    },
-  ],
+    siteName: site.name,
+    locale: site.locale,
+    url: site.url,
+    title: site.title,
+    description: site.description,
+    images: [{ url: "/og.png", width: 1920, height: 1080, alt: site.name }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tiago's Portfolio",
-    description:"Full-stack developer passionate about building modern web applications and intuitive user experiences.",
+    title: site.title,
+    description: site.description,
     images: ["/og.png"],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
   },
+  category: "technology",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fafafa" },
+    { media: "(prefers-color-scheme: dark)", color: "#09090b" },
+  ],
+};
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: site.name,
+  url: site.url,
+  image: `${site.url}${site.avatar}`,
+  email: `mailto:${site.email}`,
+  jobTitle: "Full-Stack Developer",
+  description: site.description,
+  address: {
+    "@type": "PostalAddress",
+    addressCountry: "PT",
+  },
+  sameAs: [
+    site.socials.github,
+    site.socials.linkedin,
+    site.socials.discord,
+  ],
+  knowsAbout: [
+    "TypeScript",
+    "React",
+    "Next.js",
+    "Node.js",
+    "PostgreSQL",
+    "Prisma",
+    "Tailwind CSS",
+    "Discord bot development",
+    "Luau",
+  ],
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: site.name,
+  url: site.url,
+  inLanguage: "en",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${jakarta.variable} ${mono.variable} h-full antialiased`}
+      suppressHydrationWarning
+      className={`${inter.variable} ${mono.variable} h-full antialiased`}
     >
-      <meta content="#fafafa" data-react-helmet="true" name="theme-color" />
       <body className="min-h-full">
+        <script
+          dangerouslySetInnerHTML={{ __html: themeScript }}
+        />
         <ConsoleWarning />
-        {children}
+        <Providers>{children}</Providers>
         <Analytics />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
       </body>
     </html>
   );

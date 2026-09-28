@@ -3,52 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { toKebabCase } from "@/lib/utils";
-
-const categories = [
-  {
-    title: "Frontend",
-    items: [
-      { name: "HTML", src: "/stack/html.png" },
-      { name: "CSS", src: "/stack/css.webp" },
-      { name: "JavaScript", src: "/stack/js.png" },
-      { name: "TypeScript", src: "/stack/ts.svg" },
-      { name: "React", src: "/stack/react.webp" },
-      { name: "Next.js", src: "/stack/nextjs.png" },
-      { name: "Tailwind CSS", src: "/stack/tw.jpg" },
-    ],
-  },
-  {
-    title: "Backend",
-    items: [
-      { name: "Node.js", src: "/stack/nodejs.svg" },
-      { name: "Python", src: "/stack/py.jpg" },
-      { name: "Docker", src: "/stack/docker.png" },
-      { name: "Mongo", src: "/stack/mongo.png" },
-      { name: "PHP", src: "/stack/php.svg" },
-      { name: "Go", src: "/stack/golang.png" },
-      { name: "Rust", src: "/stack/rust.png" },
-      { name: "C", src: "/stack/c.png" },
-      { name: "C++", src: "/stack/cplus.png" },
-      { name: "Prisma", src: "/stack/prisma.svg" },
-      { name: "better-auth", src: "/stack/betterauth.png" },
-      { name: "Supabase", src: "/stack/supabase.webp" },
-    ],
-  },
-  {
-    title: "Tooling",
-    items: [
-      { name: "GitHub", src: "/stack/gh.png" },
-      { name: "Git", src: "/stack/git.png" },
-      { name: "VS Code", src: "/stack/vscode.png" },
-      { name: "Obsidian", src: "/stack/obsidian.png" },
-      { name: "Tailscale", src: "/stack/tailscale.png" },
-      { name: "Linux", src : "/stack/archlinux.png" },
-      { name: "Bash", src : "/stack/gnubash.svg" },
-      { name: "pnpm", src : "/stack/pnpm.svg" },
-      { name: "Windows", src: "/stack/windows.png"}
-    ],
-  },
-];
+import { stack } from "@/content/stack";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -88,11 +43,11 @@ export default function Stack() {
           transition={{ duration: 0.55, ease: easeOut }}
           className="max-w-xl text-left"
         >
-          <p className="text-sm tracking-[0.18em] uppercase text-foreground/40 font-mono">
-            Tech stack
+          <p className="font-mono text-sm tracking-[0.18em] text-foreground/40 uppercase">
+            Stack
           </p>
           <h2 className="mt-3 font-sans text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-            The tools I reach for most.
+            The tools I use
           </h2>
           <p className="mt-4 text-base leading-relaxed text-foreground/55 sm:text-[17px]">
             From interfaces to APIs and deployments — these are the things I use
@@ -101,7 +56,7 @@ export default function Stack() {
         </motion.div>
 
         <div className="mt-9 space-y-12">
-          {categories.map((category) => (
+          {stack.map((category) => (
             <div key={category.title}>
               <motion.h3
                 initial={{ opacity: 0, y: 10 }}
@@ -138,7 +93,8 @@ export default function Stack() {
                         alt={item.name}
                         width={40}
                         height={40}
-                        className="h-9 w-9 rounded-lg object-contain grayscale transition-[filter] duration-300 group-hover:grayscale-0 sm:h-10 sm:w-10"
+                        loading="lazy"
+                        className="h-9 w-9 rounded-lg object-contain grayscale transition-[filter] duration-300 group-hover:grayscale-0 sm:h-10 sm:w-10 dark:grayscale-0"
                       />
                     </motion.div>
                     <span className="pointer-events-none text-xs font-medium text-foreground/70 opacity-0 transition-opacity duration-200 group-hover:opacity-100">

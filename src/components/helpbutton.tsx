@@ -1,41 +1,28 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Command, X, FileDown, Mail, Check } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Check, Command, FileDown, Mail, X } from "lucide-react";
+import { DiscordPresenceCompact } from "@/components/discord-presence";
+import { sections } from "@/content/sections";
+import { site } from "@/content/site";
 
-const sections = [
-  { label: "About", href: "#about" },
-  { label: "Stack", href: "#stack" },
-  { label: "Projects", href: "#projects" },
-  { label: "Work", href: "#workplaces" },
-  { label: "Contact", href: "#contact" },
-];
-
-type HelpLauncherProps = {
-  email?: string;
-  resumeUrl?: string;
-  githubUrl?: string;
-  linkedinUrl?: string;
-};
-
-export default function HelpLauncher({
-  email = "tiagu.1789@gmail.com",
-  resumeUrl = "/resume.pdf",
-  githubUrl = "https://github.com/breadddevv",
-  linkedinUrl = "https://www.linkedin.com/in/tiago-santos-b72b463ba/",
-}: HelpLauncherProps) {
+export default function HelpLauncher() {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        triggerRef.current?.focus();
+      }
     };
-    const onClick = (e: MouseEvent) => {
-      if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
+    const onClick = (event: MouseEvent) => {
+      if (rootRef.current && !rootRef.current.contains(event.target as Node)) {
         setOpen(false);
       }
     };
@@ -47,56 +34,56 @@ export default function HelpLauncher({
     };
   }, [open]);
 
-  const goTo = useCallback((href: string) => {
-    document.getElementById(href.slice(1))?.scrollIntoView({ behavior: "smooth" });
+  const goTo = useCallback((id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setOpen(false);
   }, []);
 
   const copyEmail = useCallback(async () => {
     try {
-      await navigator.clipboard.writeText(email);
+      await navigator.clipboard.writeText(site.email);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1800);
+      window.setTimeout(() => setCopied(false), 1800);
     } catch {
       // clipboard unavailable — fail silently
     }
-  }, [email]);
+  }, []);
 
   return (
-    <div ref={rootRef} className="fixed bottom-6 right-6 z-50">
+    <div ref={rootRef} className="fixed right-6 bottom-6 z-50">
       <AnimatePresence>
         {open ? (
           <motion.div
+            role="dialog"
+            aria-label="Quick actions"
             initial={{ opacity: 0, y: 12, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.96 }}
             transition={{ type: "spring", stiffness: 380, damping: 32 }}
-            className="absolute bottom-16 right-0 w-[320px] rounded-2xl border border-border bg-background/95 p-3 shadow-xl backdrop-blur-xl"
+            className="absolute right-0 bottom-16 w-[320px] rounded-2xl border border-border bg-background/95 p-3 shadow-xl backdrop-blur-xl"
           >
-            {/* quick nav strip */}
-            <div className="mb-3 flex gap-1.5 overflow-x-auto scrollbar-hide pb-1">
-              {sections.map((s) => (
+            <div className="scrollbar-hide mb-3 flex gap-1.5 overflow-x-auto pb-1">
+              {sections.map((section) => (
                 <button
-                  key={s.href}
+                  key={section.id}
                   type="button"
-                  onClick={() => goTo(s.href)}
+                  onClick={() => goTo(section.id)}
                   className="shrink-0 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-medium text-foreground/80 transition-colors hover:bg-card-hover hover:text-foreground"
                 >
-                  {s.label}
+                  {section.label}
                 </button>
               ))}
             </div>
 
-            {/* bento grid */}
-            <div className="grid grid-cols-4 grid-rows-2 gap-2">
+            <div className="grid grid-cols-4 gap-2">
               <a
-                href={resumeUrl}
+                href={site.resume}
                 download
-                className="col-span-2 row-span-2 flex flex-col justify-between rounded-xl border border-border bg-card p-3 transition-colors hover:bg-card-hover"
+                className="col-span-2 flex flex-col justify-between rounded-xl border border-border bg-card p-3 transition-colors hover:bg-card-hover"
               >
-                <FileDown size={18} className="text-accent" />
+                <FileDown size={18} className="text-foreground/70" />
                 <div>
-                  <p className="text-sm font-semibold text-foreground">Resume</p>
+                  <p className="text-sm font-semibold text-foreground">Résumé</p>
                   <p className="text-xs text-muted">Download PDF</p>
                 </div>
               </a>
@@ -106,43 +93,50 @@ export default function HelpLauncher({
                 onClick={copyEmail}
                 className="col-span-2 flex items-center justify-between rounded-xl border border-border bg-card p-3 text-left transition-colors hover:bg-card-hover"
               >
-                <div>
+                <div className="min-w-0">
                   <p className="text-sm font-semibold text-foreground">Email</p>
-                  <p className="text-xs text-muted">{copied ? "Copied!" : "Tap to copy"}</p>
+                  <p className="truncate text-xs text-muted">
+                    {copied ? "Copied!" : "Tap to copy"}
+                  </p>
                 </div>
                 {copied ? (
-                  <Check size={16} className="text-accent" />
+                  <Check size={16} className="shrink-0 text-foreground/70" />
                 ) : (
-                  <Mail size={16} className="text-muted" />
+                  <Mail size={16} className="shrink-0 text-muted" />
                 )}
               </button>
 
               <a
-                href={githubUrl}
+                href={site.socials.github}
                 target="_blank"
-                rel="noreferrer"
-                className="col-span-1 flex flex-col items-start justify-between rounded-xl border border-border bg-card p-3 transition-colors hover:bg-card-hover"
+                rel="noopener noreferrer"
+                className="col-span-2 flex items-center rounded-xl border border-border bg-card p-3 text-xs font-medium text-foreground/80 transition-colors hover:bg-card-hover"
               >
-                <span className="text-xs font-medium text-foreground/80">GitHub</span>
+                GitHub
               </a>
-
               <a
-                href={linkedinUrl}
+                href={site.socials.linkedin}
                 target="_blank"
-                rel="noreferrer"
-                className="col-span-1 flex flex-col items-start justify-between rounded-xl border border-border bg-card p-3 transition-colors hover:bg-card-hover"
+                rel="noopener noreferrer"
+                className="col-span-2 flex items-center rounded-xl border border-border bg-card p-3 text-xs font-medium text-foreground/80 transition-colors hover:bg-card-hover"
               >
-                <span className="text-xs font-medium text-foreground/80">LinkedIn</span>
+                LinkedIn
               </a>
+            </div>
+
+            <div className="mt-2 grid grid-cols-4 gap-2">
+              <DiscordPresenceCompact />
             </div>
           </motion.div>
         ) : null}
       </AnimatePresence>
 
       <motion.button
+        ref={triggerRef}
         type="button"
         onClick={() => setOpen((v) => !v)}
         whileTap={{ scale: 0.94 }}
+        aria-expanded={open}
         className="flex size-12 items-center justify-center rounded-full border border-border bg-background text-foreground/90 shadow-lg"
         aria-label={open ? "Close quick actions" : "Open quick actions"}
       >

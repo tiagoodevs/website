@@ -1,31 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-
-const roles = [
-  "Full-Stack Developer",
-  "UI Engineer",
-  "Product Builder",
-  "Problem Solver",
-  "Student",
-];
-
-const floatingEmojis = [
-  { emoji: "🌸", top: "12%", left: "8%", size: "1.6rem", duration: 7, delay: 0, x: 14, rotate: 12 },
-  { emoji: "✨", top: "18%", left: "78%", size: "1.25rem", duration: 6.5, delay: 0.4, x: -12, rotate: -10 },
-  { emoji: "🍃", top: "28%", left: "88%", size: "1.5rem", duration: 8, delay: 0.8, x: -10, rotate: 16 },
-  { emoji: "🌼", top: "68%", left: "10%", size: "1.35rem", duration: 7.5, delay: 0.2, x: 16, rotate: -14 },
-  { emoji: "☁️", top: "14%", left: "42%", size: "1.7rem", duration: 9, delay: 1.1, x: 10, rotate: 6 },
-  { emoji: "⭐", top: "72%", left: "82%", size: "1.2rem", duration: 6.8, delay: 0.6, x: -14, rotate: 18 },
-  { emoji: "🪴", top: "58%", left: "4%", size: "1.55rem", duration: 8.2, delay: 1.4, x: 12, rotate: -8 },
-  { emoji: "💫", top: "42%", left: "92%", size: "1.3rem", duration: 7.2, delay: 0.3, x: -16, rotate: 14 },
-  { emoji: "🦋", top: "78%", left: "28%", size: "1.4rem", duration: 8.6, delay: 0.9, x: 18, rotate: -12 },
-  { emoji: "🌙", top: "34%", left: "6%", size: "1.25rem", duration: 9.4, delay: 1.6, x: 10, rotate: 10 },
-  { emoji: "🍀", top: "86%", left: "62%", size: "1.3rem", duration: 7.8, delay: 0.5, x: -12, rotate: -16 },
-  { emoji: "🌻", top: "48%", left: "84%", size: "1.45rem", duration: 8.4, delay: 1.2, x: -10, rotate: 8 },
-];
+import { floatingEmojis, roles } from "@/content/about";
+import { site } from "@/content/site";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -43,10 +22,24 @@ const fadeUp = {
 };
 
 function FloatingEmojis() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
       {floatingEmojis.map((item, i) => {
         const enterDelay = 0.25 + i * 0.07;
+
+        if (reduceMotion) {
+          return (
+            <span
+              key={`${item.emoji}-${i}`}
+              className="absolute select-none"
+              style={{ top: item.top, left: item.left, fontSize: item.size }}
+            >
+              {item.emoji}
+            </span>
+          );
+        }
 
         return (
           <motion.span
@@ -61,11 +54,7 @@ function FloatingEmojis() {
               delay: enterDelay,
             }}
             className="absolute select-none"
-            style={{
-              top: item.top,
-              left: item.left,
-              fontSize: item.size,
-            }}
+            style={{ top: item.top, left: item.left, fontSize: item.size }}
           >
             <motion.span
               className="block"
@@ -94,13 +83,25 @@ function FloatingEmojis() {
 
 function RotatingRole() {
   const [index, setIndex] = useState(0);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
+    // A cycling text carousel is exactly the kind of motion that triggers
+    // vestibular symptoms, so it is opt-out rather than opt-in.
+    if (reduceMotion) return;
     const id = window.setInterval(() => {
       setIndex((prev) => (prev + 1) % roles.length);
     }, 2600);
     return () => window.clearInterval(id);
-  }, []);
+  }, [reduceMotion]);
+
+  if (reduceMotion) {
+    return (
+      <span className="rounded-md bg-foreground/6 px-2.5 py-0.5 text-foreground ring-1 ring-foreground/4">
+        {roles[0]}
+      </span>
+    );
+  }
 
   return (
     <motion.span
@@ -141,6 +142,29 @@ function RotatingRole() {
   );
 }
 
+function ScrollHint() {
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <motion.a
+      href="#about"
+      aria-label="Scroll down"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 1.1, duration: 0.6 }}
+      className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-foreground/35 transition-colors hover:text-foreground/60"
+    >
+      <motion.span
+        animate={reduceMotion ? undefined : { y: [0, 6, 0] }}
+        transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+        className="block"
+      >
+        <ChevronDown size={28} strokeWidth={1.5} />
+      </motion.span>
+    </motion.a>
+  );
+}
+
 export default function Hero() {
   return (
     <section className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden px-6 text-center">
@@ -154,9 +178,11 @@ export default function Hero() {
           animate="visible"
           className="font-sans text-5xl font-semibold tracking-tight text-foreground sm:text-6xl md:text-7xl"
         >
-          <span className="text-foreground/35"><span className="text-white">👋</span>Hi, I&apos;m</span>
+          <span className="text-foreground/35">
+            <span aria-hidden>👋</span>Hi, I&apos;m
+          </span>
           <br />
-          Tiago Santos
+          {site.name}
         </motion.h1>
 
         <motion.p
@@ -184,6 +210,13 @@ export default function Hero() {
             View work
           </a>
           <a
+            href={site.resume}
+            download
+            className="rounded-xl border border-foreground/15 px-6 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-foreground/30 hover:bg-foreground/5"
+          >
+            Résumé
+          </a>
+          <a
             href="#contact"
             className="rounded-xl border border-foreground/15 px-6 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-foreground/30 hover:bg-foreground/5"
           >
@@ -192,26 +225,7 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      <motion.a
-        href="#about"
-        aria-label="Scroll down"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.1, duration: 0.6 }}
-        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-foreground/35 transition-colors hover:text-foreground/60"
-      >
-        <motion.span
-          animate={{ y: [0, 6, 0] }}
-          transition={{
-            duration: 1.6,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="block"
-        >
-          <ChevronDown size={28} strokeWidth={1.5} />
-        </motion.span>
-      </motion.a>
+      <ScrollHint />
     </section>
   );
 }
