@@ -108,11 +108,6 @@ export function DiscordPresenceCard() {
       <div className="min-w-0 text-left">
         <p className="truncate text-sm font-semibold text-foreground">
           {name}
-          {guildTag ? (
-            <span className="ml-1.5 font-normal text-foreground/40">
-              {guildTag}
-            </span>
-          ) : null}
         </p>
         <p className="flex items-center gap-1.5 truncate text-sm text-foreground/55">
           <StatusDot status={status} size="size-2" />
@@ -120,15 +115,9 @@ export function DiscordPresenceCard() {
           {activity?.name ? (
             <span className="truncate">
               · {activity.name}
-              {activity.details ? ` — ${activity.details}` : ""}
             </span>
           ) : null}
         </p>
-        {custom ? (
-          <p className="mt-1 line-clamp-2 text-sm text-foreground/45 italic">
-            {custom}
-          </p>
-        ) : null}
       </div>
     </div>
   );
