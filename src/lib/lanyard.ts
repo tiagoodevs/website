@@ -7,6 +7,7 @@ export type LanyardActivity = {
   name?: string;
   state?: string | null;
   details?: string | null;
+  flags: number;
   created_at?: number;
   timestamps?: { start?: number; end?: number };
 };

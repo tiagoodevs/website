@@ -210,13 +210,6 @@ export default function Hero() {
             View work
           </a>
           <a
-            href={site.resume}
-            download
-            className="rounded-xl border border-foreground/15 px-6 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-foreground/30 hover:bg-foreground/5"
-          >
-            Résumé
-          </a>
-          <a
             href="#contact"
             className="rounded-xl border border-foreground/15 px-6 py-2.5 text-sm font-medium text-foreground transition-colors hover:border-foreground/30 hover:bg-foreground/5"
           >

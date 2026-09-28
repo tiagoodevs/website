@@ -42,7 +42,6 @@ export default function Navbar() {
           className="text-lg font-bold tracking-tight text-foreground"
         >
           {site.shortName}
-          <span className="text-muted">.</span>
         </Link>
 
         <nav aria-label="Main" className="hidden items-center gap-1 md:flex">
@@ -58,13 +57,6 @@ export default function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <a
-            href={site.resume}
-            download
-            className="hidden rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-card-hover sm:inline-flex"
-          >
-            Résumé
-          </a>
           <ThemeToggle />
           <a
             href="#contact"

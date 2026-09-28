@@ -33,7 +33,7 @@ export default function About() {
           viewport={{ once: true, amount: 0.35 }}
           className="relative mx-auto w-full max-w-sm md:mx-0"
         >
-          <div className="rounded-full p-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.12)] ring-3 ring-brand">
+          <div className="rounded-full p-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.12)]">
             <div className="overflow-hidden rounded-full bg-foreground">
               <Image
                 src={site.avatar}

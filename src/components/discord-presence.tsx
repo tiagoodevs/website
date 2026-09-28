@@ -13,6 +13,9 @@ import {
   STATUS_LABEL,
   type DiscordStatus,
 } from "@/lib/lanyard";
+import musicIcon from "@/../public/assets/music.svg"
+import playing from "@/../public/assets/playing.svg"
+import Image from "next/image";
 
 const DM_URL = site.socials.discord;
 
@@ -28,9 +31,8 @@ function StatusDot({
   return (
     <span
       aria-hidden
-      className={`block shrink-0 rounded-full ${size} ${
-        ring ? "ring-2 ring-card" : ""
-      }`}
+      className={`block shrink-0 rounded-full ${size} ${ring ? "ring-2 ring-card" : ""
+        }`}
       style={{ backgroundColor: STATUS_COLOR[status] }}
     />
   );
@@ -82,12 +84,13 @@ export function DiscordPresenceCard() {
   const name = user.global_name || user.username;
   const guildTag = user.primary_guild?.tag;
 
+  console.log(data)
+  console.log(activity)
+
   return (
     <div className="flex items-center gap-3">
       <span className="relative shrink-0">
         {avatar ? (
-          // Served by Discord's CDN already sized and optimised; a proxy hop
-          // would add latency without reducing bytes.
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={avatar}
@@ -98,7 +101,7 @@ export function DiscordPresenceCard() {
             loading="lazy"
           />
         ) : (
-          <span className="block size-11 rounded-full bg-foreground/10" />
+          <span className="block size-11 rounded-full bg-foreground" />
         )}
         <span className="absolute -right-0.5 -bottom-0.5 block size-3.5 rounded-full ring-2 ring-card">
           <StatusDot status={status} size="size-full" />
@@ -110,11 +113,14 @@ export function DiscordPresenceCard() {
           {name}
         </p>
         <p className="flex items-center gap-1.5 truncate text-sm text-foreground/55">
-          <StatusDot status={status} size="size-2" />
-          {STATUS_LABEL[status]}
-          {activity?.name ? (
-            <span className="truncate">
-              · {activity.name}
+          {activity ? (
+            <span className="truncate flex gap-1 text-xs">
+              {activity.flags == 48 && <>
+                <Image src={musicIcon} alt="sad" width={14} /> {activity.details}, {activity.state}
+              </>}
+              {activity.flags == 1 && <>
+                <Image src={playing} alt="sad" width={14} /> {activity.name}, {activity.state}
+              </>}
             </span>
           ) : null}
         </p>
@@ -149,13 +155,6 @@ export function DiscordPresenceCompact() {
       <span className="min-w-0 flex-1">
         <span className="block truncate text-xs font-semibold text-foreground">
           {state === "loading" ? "Discord" : name}
-        </span>
-        <span className="block truncate text-xs text-muted">
-          {state === "loading"
-            ? "Connecting…"
-            : state === "error"
-              ? "Status unavailable"
-              : `${STATUS_LABEL[status]} — DM me`}
         </span>
       </span>
     </a>
