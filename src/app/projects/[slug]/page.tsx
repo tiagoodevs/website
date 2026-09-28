@@ -46,12 +46,6 @@ export async function generateMetadata({
   };
 }
 
-const statusLabel: Record<string, string> = {
-  live: "Live",
-  ongoing: "Ongoing",
-  archived: "Archived",
-};
-
 const linkMeta = {
   github: { label: "Source code", icon: siGithub, prefix: "" },
   discord: { label: "Discord server", icon: siDiscord, prefix: "" },

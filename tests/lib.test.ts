@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { toKebabCase } from "@/lib/utils";
 import {
+  activityIcon,
   avatarUrl,
   currentActivity,
   customStatus,
@@ -37,8 +38,8 @@ describe("lanyard helpers", () => {
       },
       discord_status: "dnd",
       activities: [
-        { type: 4, state: "custom message" },
-        { type: 0, name: "Code", details: "Not in a file!" },
+        { type: 4, state: "custom message", flags: 0 },
+        { type: 0, name: "Code", details: "Not in a file!", flags: 1 },
       ],
       active_on_discord_web: false,
       active_on_discord_desktop: true,
@@ -59,8 +60,14 @@ describe("lanyard helpers", () => {
 
   it("picks out the custom status", () => {
     expect(customStatus(payload.data.activities)).toBe("custom message");
-    expect(customStatus([{ type: 0, name: "Code" }])).toBeNull();
-    expect(customStatus([{ type: 4, state: "   " }])).toBeNull();
+    expect(customStatus([{ type: 0, name: "Code", flags: 0 }])).toBeNull();
+    expect(customStatus([{ type: 4, state: "   ", flags: 0 }])).toBeNull();
+  });
+
+  it("maps activity flags to the icon that represents them", () => {
+    expect(activityIcon({ type: 3, name: "Song", flags: 48 })).toBe("music");
+    expect(activityIcon({ type: 0, name: "Code", flags: 1 })).toBe("playing");
+    expect(activityIcon({ type: 0, name: "Code", flags: 0 })).toBeNull();
   });
 
   it("prefers a playing activity over a custom status", () => {

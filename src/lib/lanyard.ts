@@ -59,6 +59,18 @@ export function customStatus(activities: LanyardActivity[]): string | null {
   return custom?.state?.trim() || null;
 }
 
+export type ActivityIcon = "music" | "playing";
+
+/** `flags` is a bitfield: 48 = SYNC|PLAY (a synced track), 1 = INSTANCE (a game). */
+const ACTIVITY_ICON_FLAGS: Partial<Record<number, ActivityIcon>> = {
+  48: "music",
+  1: "playing",
+};
+
+export function activityIcon(activity: LanyardActivity): ActivityIcon | null {
+  return ACTIVITY_ICON_FLAGS[activity.flags] ?? null;
+}
+
 export function currentActivity(
   activities: LanyardActivity[],
 ): LanyardActivity | null {

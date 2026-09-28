@@ -5,19 +5,22 @@ import { siDiscord } from "simple-icons";
 import IconResolve from "@/lib/icons";
 import { discord, site } from "@/content/site";
 import { useDiscordPresence } from "@/hooks/use-discord-presence";
+import Image from "next/image";
 import {
+  activityIcon,
   avatarUrl,
   currentActivity,
-  customStatus,
   STATUS_COLOR,
-  STATUS_LABEL,
+  type ActivityIcon,
   type DiscordStatus,
 } from "@/lib/lanyard";
-import musicIcon from "@/../public/assets/music.svg"
-import playing from "@/../public/assets/playing.svg"
-import Image from "next/image";
 
 const DM_URL = site.socials.discord;
+
+const ACTIVITY_ICONS: Record<ActivityIcon, string> = {
+  music: "/assets/music.svg",
+  playing: "/assets/playing.svg",
+};
 
 function StatusDot({
   status,
@@ -78,14 +81,10 @@ export function DiscordPresenceCard() {
 
   const user = data.discord_user;
   const status = data.discord_status;
-  const custom = customStatus(data.activities);
   const activity = currentActivity(data.activities);
+  const icon = activity ? activityIcon(activity) : null;
   const avatar = avatarUrl(user);
   const name = user.global_name || user.username;
-  const guildTag = user.primary_guild?.tag;
-
-  console.log(data)
-  console.log(activity)
 
   return (
     <div className="flex items-center gap-3">
@@ -114,13 +113,22 @@ export function DiscordPresenceCard() {
         </p>
         <p className="flex items-center gap-1.5 truncate text-sm text-foreground/55">
           {activity ? (
-            <span className="truncate flex gap-1 text-xs">
-              {activity.flags == 48 && <>
-                <Image src={musicIcon} alt="sad" width={14} /> {activity.details}, {activity.state}
-              </>}
-              {activity.flags == 1 && <>
-                <Image src={playing} alt="sad" width={14} /> {activity.name}, {activity.state}
-              </>}
+            <span className="flex gap-1 truncate text-xs">
+              {icon ? (
+                <Image
+                  src={ACTIVITY_ICONS[icon]}
+                  alt=""
+                  width={14}
+                  height={14}
+                  className="h-3.5 w-3.5 shrink-0"
+                />
+              ) : null}
+              {[
+                icon === "music" ? activity.details : activity.name,
+                activity.state,
+              ]
+                .filter(Boolean)
+                .join(", ")}
             </span>
           ) : null}
         </p>
