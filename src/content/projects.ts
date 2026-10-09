@@ -62,8 +62,8 @@ export const projects: Project[] = [
     status: "live",
   },
   {
-    slug: "feedbase",
-    title: "Feedbase",
+    slug: "usercue",
+    title: "Usercue",
     summary:
       "An open-source feedback management platform for product teams who want to collect and analyse user feedback in one place.",
     detail:
@@ -78,8 +78,8 @@ export const projects: Project[] = [
       "saas",
     ],
     links: {
-      github: "https://github.com/breadddevv/feedbase",
-      demo: "https://feedbase.breaddevv.cc",
+      github: "https://github.com/Paddlewheel-inc/usercue",
+      demo: "https://usercue.app",
       discord: "https://discord.gg/aYYFyfJSJC",
     },
     status: "live",
