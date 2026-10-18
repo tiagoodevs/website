@@ -25,28 +25,6 @@ export default function About() {
   return (
     <section id="about" className="relative scroll-mt-20 px-6 py-24 sm:py-32">
       <div className="mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:gap-16">
-        <motion.div
-          custom={0}
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.35 }}
-          className="relative mx-auto w-full max-w-sm md:mx-0"
-        >
-          <div className="rounded-full p-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.12)]">
-            <div className="overflow-hidden rounded-full bg-foreground">
-              <Image
-                src={site.avatar}
-                alt={`Portrait of ${site.name}`}
-                width={800}
-                height={800}
-                sizes="(max-width: 768px) 384px, 340px"
-                className="aspect-square h-auto w-full object-cover"
-              />
-            </div>
-          </div>
-        </motion.div>
-
         <div className="flex flex-col items-start text-left">
           <motion.p
             custom={1}
