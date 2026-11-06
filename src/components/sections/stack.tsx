@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { stackGroups } from "@/data/portfolio";
+import { StackIcon } from "../assets/stack-icons";
 import { Reveal } from "../reveal";
 import { SectionHeading } from "../section-heading";
 
@@ -75,7 +76,14 @@ export function Stack() {
                         className="tech-tile flex h-8 w-8 flex-none items-center justify-center rounded-lg font-mono text-[10px] font-medium"
                         style={{ "--brand": item.color } as CSSProperties}
                       >
-                        {item.short}
+                        {item.icon ? (
+                          <StackIcon
+                            icon={item.icon}
+                            className="h-4.5 w-4.5"
+                          />
+                        ) : (
+                          item.short
+                        )}
                       </span>
                       <span className="truncate text-[11.5px] font-medium tracking-[-0.01em]">
                         {item.name}

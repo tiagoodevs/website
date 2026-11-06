@@ -26,6 +26,31 @@ export function ArrowRight(props: IconProps) {
   );
 }
 
+export function ArrowLeft(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" {...strokeProps} {...props}>
+      <path d="M20 12H5m0 0 5.5-5.5M5 12l5.5 5.5" />
+    </svg>
+  );
+}
+
+export function Play(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" {...props}>
+      <path d="M8 5.4c0-.8.9-1.3 1.6-.9l9.2 6.1c.7.5.7 1.5 0 2l-9.2 6.1c-.7.4-1.6-.1-1.6-.9V5.4Z" />
+    </svg>
+  );
+}
+
+export function Pause(props: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" {...props}>
+      <rect x="7" y="5" width="3.5" height="14" rx="1.2" />
+      <rect x="13.5" y="5" width="3.5" height="14" rx="1.2" />
+    </svg>
+  );
+}
+
 export function Mail(props: IconProps) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" {...strokeProps} {...props}>

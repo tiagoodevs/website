@@ -29,6 +29,8 @@ export type Project = {
 export type StackItem = {
   name: string;
   short: string;
+  /** Simple Icons slug for the brand mark shown in the stack tile. */
+  icon?: string;
   color: string;
 };
 
@@ -40,6 +42,8 @@ export type StackGroup = {
 
 export type Testimonial = {
   quote: string;
+  /** Short phrases inside `quote` to emphasize visually. */
+  highlights?: string[];
   name: string;
   role: string;
   initials: string;
@@ -114,50 +118,65 @@ export const stackGroups: StackGroup[] = [
     title: "Frontend",
     caption: "Interfaces, motion, and the details people feel.",
     items: [
-      { name: "HTML", short: "HT", color: "#e34f26" },
-      { name: "CSS", short: "CS", color: "#1572b6" },
-      { name: "JavaScript", short: "JS", color: "#e8c400" },
-      { name: "TypeScript", short: "TS", color: "#3178c6" },
-      { name: "React", short: "Re", color: "#149eca" },
-      { name: "Next.js", short: "N", color: "#3c3c3c" },
-      { name: "Tailwind CSS", short: "Tw", color: "#0ea5e9" },
+      { name: "HTML", short: "HT", icon: "html5", color: "#e34f26" },
+      { name: "CSS", short: "CS", icon: "css", color: "#1572b6" },
+      { name: "JavaScript", short: "JS", icon: "javascript", color: "#e8c400" },
+      { name: "TypeScript", short: "TS", icon: "typescript", color: "#3178c6" },
+      { name: "React", short: "Re", icon: "react", color: "#149eca" },
+      { name: "Next.js", short: "N", icon: "nextdotjs", color: "#3c3c3c" },
+      {
+        name: "Tailwind CSS",
+        short: "Tw",
+        icon: "tailwindcss",
+        color: "#0ea5e9",
+      },
     ],
   },
   {
     title: "Backend",
     caption: "APIs, data, infrastructure, and everything behind the glass.",
     items: [
-      { name: "Node.js", short: "No", color: "#5fa04e" },
-      { name: "Python", short: "Py", color: "#3776ab" },
-      { name: "Docker", short: "Do", color: "#2496ed" },
-      { name: "MongoDB", short: "Mo", color: "#47a248" },
-      { name: "PHP", short: "Ph", color: "#777bb4" },
-      { name: "Go", short: "Go", color: "#00add8" },
-      { name: "Rust", short: "Ru", color: "#b7410e" },
-      { name: "C", short: "C", color: "#5c6bc0" },
-      { name: "C++", short: "C+", color: "#00599c" },
-      { name: "Prisma", short: "Pr", color: "#2d3748" },
-      { name: "better-auth", short: "ba", color: "#7c3aed" },
-      { name: "Supabase", short: "Sb", color: "#1d9a6c" },
-      { name: "Fastify", short: "Fa", color: "#3c3c3c" },
-      { name: "Express", short: "Ex", color: "#3c3c3c" },
-      { name: "Hono", short: "Ho", color: "#e36002" },
+      { name: "Node.js", short: "No", icon: "nodedotjs", color: "#5fa04e" },
+      { name: "Python", short: "Py", icon: "python", color: "#3776ab" },
+      { name: "Docker", short: "Do", icon: "docker", color: "#2496ed" },
+      { name: "MongoDB", short: "Mo", icon: "mongodb", color: "#47a248" },
+      { name: "PHP", short: "Ph", icon: "php", color: "#777bb4" },
+      { name: "Go", short: "Go", icon: "go", color: "#00add8" },
+      { name: "Rust", short: "Ru", icon: "rust", color: "#b7410e" },
+      { name: "C", short: "C", icon: "c", color: "#5c6bc0" },
+      { name: "C++", short: "C+", icon: "cplusplus", color: "#00599c" },
+      { name: "Prisma", short: "Pr", icon: "prisma", color: "#2d3748" },
+      {
+        name: "better-auth",
+        short: "ba",
+        icon: "betterauth",
+        color: "#7c3aed",
+      },
+      { name: "Supabase", short: "Sb", icon: "supabase", color: "#1d9a6c" },
+      { name: "Fastify", short: "Fa", icon: "fastify", color: "#3c3c3c" },
+      { name: "Express", short: "Ex", icon: "express", color: "#3c3c3c" },
+      { name: "Hono", short: "Ho", icon: "hono", color: "#e36002" },
     ],
   },
   {
     title: "Tooling",
     caption: "The everyday setup that keeps the work moving.",
     items: [
-      { name: "GitHub", short: "Gh", color: "#3c3c3c" },
-      { name: "Git", short: "Gi", color: "#f05032" },
-      { name: "VS Code", short: "VS", color: "#007acc" },
-      { name: "Obsidian", short: "Ob", color: "#7c3aed" },
-      { name: "Tailscale", short: "Ta", color: "#242424" },
-      { name: "Linux", short: "Li", color: "#c9a300" },
-      { name: "Bash", short: "Ba", color: "#4eaa25" },
-      { name: "pnpm", short: "pn", color: "#f69220" },
-      { name: "Bun", short: "Bu", color: "#c98a5e" },
-      { name: "Windows", short: "Wi", color: "#0078d4" },
+      { name: "GitHub", short: "Gh", icon: "github", color: "#3c3c3c" },
+      { name: "Git", short: "Gi", icon: "git", color: "#f05032" },
+      {
+        name: "VS Code",
+        short: "VS",
+        icon: "visualstudiocode",
+        color: "#007acc",
+      },
+      { name: "Obsidian", short: "Ob", icon: "obsidian", color: "#7c3aed" },
+      { name: "Tailscale", short: "Ta", icon: "tailscale", color: "#242424" },
+      { name: "Linux", short: "Li", icon: "linux", color: "#c9a300" },
+      { name: "Bash", short: "Ba", icon: "gnubash", color: "#4eaa25" },
+      { name: "pnpm", short: "pn", icon: "pnpm", color: "#f69220" },
+      { name: "Bun", short: "Bu", icon: "bun", color: "#c98a5e" },
+      { name: "Windows", short: "Wi", icon: "windows", color: "#0078d4" },
     ],
   },
 ];
@@ -337,6 +356,12 @@ export const testimonials: Testimonial[] = [
   {
     quote:
       "Working with Tiago was an incredible experience. He consistently demonstrated an open mind and a strong willingness to learn more. Tiago approaches challenges with curiosity and professionalism, and he is always looking for ways to grow and improve. I would highly recommend him to any team looking for someone dedicated, adaptable, and eager to develop new skills.",
+    highlights: [
+      "an incredible experience",
+      "open mind",
+      "curiosity and professionalism",
+      "dedicated, adaptable",
+    ],
     name: "Brennan Peters",
     role: "Owner · Orbit",
     initials: "BP",
@@ -345,6 +370,11 @@ export const testimonials: Testimonial[] = [
   {
     quote:
       "Tiago demonstrated strong development skills during his time at Almore Shopping. He built several systems for our Version 3 update and quickly proved himself as a reliable and professional developer. Due to his contributions and dedication, he progressed from the development team to Development Director, then Executive Assistant, and eventually Vice Director.",
+    highlights: [
+      "strong development skills",
+      "reliable and professional developer",
+      "Development Director",
+    ],
     name: "Alex",
     role: "Executive Director · Almore Shopping",
     initials: "Al",
@@ -353,6 +383,7 @@ export const testimonials: Testimonial[] = [
   {
     quote:
       "Tiago is a proactive and reliable developer who consistently met deadlines, while always being up for a new challenge. He was always willing to step in and support the team whenever it was needed, making him a valuable asset to our projects.",
+    highlights: ["proactive and reliable", "met deadlines", "valuable asset"],
     name: "Cuba Eastern",
     role: "Executive Officer · Freshly Shopping UK",
     initials: "CE",
@@ -361,6 +392,11 @@ export const testimonials: Testimonial[] = [
   {
     quote:
       "Tiago is a hard-working, knowledgeable and kind developer he has proven and shown this to me by working alongside and for me, as far as I know he can do everything I have asked him to do and is always ready and up for a new challenge.",
+    highlights: [
+      "hard-working, knowledgeable and kind",
+      "always ready",
+      "up for a new challenge",
+    ],
     name: "Olliebobsg",
     role: "Founder · Neon Stores UK",
     initials: "Ob",
@@ -368,7 +404,12 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      "Tiago has admirable skills and experience in the UI/UX field. As our Frontend Developer on Coffee Systems, he consistently impressed me with his ability to turn complex ideas into clean, user-friendly interfaces. His design intuition, attention to detail, and execution truly elevated the project.",
+      "Tiago has admirable skills and experience in the UI/UX field. As our Frontend Developer on Monitry, he consistently impressed me with his ability to turn complex ideas into clean, user-friendly interfaces. His design intuition, attention to detail, and execution truly elevated the project.",
+    highlights: [
+      "admirable skills",
+      "turn complex ideas into clean, user-friendly interfaces",
+      "attention to detail",
+    ],
     name: "2MillionGunGuy",
     role: "Director · Monitry",
     initials: "2M",
@@ -377,6 +418,11 @@ export const testimonials: Testimonial[] = [
   {
     quote:
       "Tiago has shown his capabilities as a developer in Lory's shopping. I am impressed that Tiago always has something new to show to the team, and it is always there to help, whether when there's a problem in the game, or a problem in the team.",
+    highlights: [
+      "capabilities as a developer",
+      "always has something new",
+      "always there to help",
+    ],
     name: "Lory342",
     role: "Founder · Lory's Shopping Center",
     initials: "L3",
@@ -385,6 +431,11 @@ export const testimonials: Testimonial[] = [
   {
     quote:
       "Tiago knows JavaScript, Lua, HTML and has great knowledge of many programming languages. I am glad that Tiago always helps me when I ask some questions and need help. Tiago is always respectful, professional and friendly.",
+    highlights: [
+      "JavaScript, Lua, HTML",
+      "great knowledge",
+      "respectful, professional and friendly",
+    ],
     name: "KokoGamerPL",
     role: "Executive Director · Koko's Store",
     initials: "KG",
@@ -393,6 +444,12 @@ export const testimonials: Testimonial[] = [
   {
     quote:
       "I've had the pleasure of working with Tiago on several occasions, and I can confidently say he's one of the most talented and dependable people I've worked with. His expertise in coding, design, and problem-solving is impressive, and he approaches every challenge with professionalism, creativity, and attention to detail. Beyond his technical abilities, Tiago is an excellent collaborator who genuinely cares about delivering high-quality work. If you're looking for someone who can turn ideas into exceptional results, Tiago is the person to trust.",
+    highlights: [
+      "talented and dependable",
+      "coding, design, and problem-solving",
+      "attention to detail",
+      "turn ideas into exceptional results",
+    ],
     name: "Vortex",
     role: "President · Five Fries",
     initials: "Vx",
@@ -445,8 +502,8 @@ export const experience: Experience[] = [
   {
     company: "Orbit",
     role: "Maintainer",
-    period: "Jan 2026 – Jul 2026",
-    current: false,
+    period: "Since Jan 2026",
+    current: true,
     description:
       "Maintained and improved the Orbit HRM platform, keeping the platform up to date, accessible, and easy to use. Worked across the project on development, infrastructure, community needs, and contributor coordination, including reviewing issues and pull requests.",
     initials: "Or",
@@ -482,7 +539,13 @@ export const companies = [
 ];
 
 export const stats = [
-  { value: String(projects.length).padStart(2, "0"), label: "Projects shipped" },
-  { value: String(profile.currently.length).padStart(2, "0"), label: "Teams and counting" },
+  {
+    value: String(projects.length).padStart(2, "0"),
+    label: "Projects shipped",
+  },
+  {
+    value: String(profile.currently.length).padStart(2, "0"),
+    label: "Teams and counting",
+  },
   { value: String(testimonials.length).padStart(2, "0"), label: "Kind words" },
 ];
