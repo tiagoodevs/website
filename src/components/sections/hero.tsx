@@ -1,5 +1,5 @@
-import { companies, profile } from "@/data/portfolio";
-import { ArrowRight, ArrowUpRight, MapPin, Sparkle, Clock } from "../icons";
+import { profile } from "@/data/portfolio";
+import { ArrowRight, ArrowUpRight, MapPin, Clock } from "../icons";
 import { LocalTime } from "../local-time";
 import { Reveal } from "../reveal";
 
@@ -7,7 +7,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden py-24 sm:py-28"
+      className="relative flex min-h-screen items-center overflow-hidden py-24 sm:py-28"
     >
       <div
         aria-hidden="true"
@@ -19,7 +19,7 @@ export function Hero() {
       </div>
 
       <div className="shell w-full">
-        <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
+        <div className="mx-auto flex max-w-2xl flex-col items-center text-center md:mx-0 md:items-start md:text-left">
           <Reveal>
             <div className="inline-flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 rounded-full border border-line bg-surface/60 px-3 py-1.5 text-[12px] font-medium text-muted backdrop-blur-sm">
               <MapPin className="h-3.5 w-3.5 text-faint" />
@@ -37,13 +37,13 @@ export function Hero() {
           </Reveal>
 
           <Reveal delay={160}>
-            <p className="mx-auto mt-6 max-w-lg text-[15px] leading-relaxed text-muted">
+            <p className="mx-auto mt-6 max-w-lg text-[15px] leading-relaxed text-muted md:mx-0">
               {profile.intro}
             </p>
           </Reveal>
 
           <Reveal delay={210}>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-2.5 md:justify-start">
               <a href="#work" className="btn btn-primary">
                 View selected work
                 <ArrowRight className="h-4 w-4" />

@@ -52,7 +52,7 @@ export function SiteNav() {
             <span className="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-ink font-display text-[13px] font-bold tracking-[-0.04em] text-bg">
               TS
             </span>
-            <span className="hidden truncate text-[13px] font-semibold tracking-[-0.02em] text-ink sm:block">
+            <span className="truncate text-[13px] font-semibold tracking-[-0.02em] text-ink">
               Tiago Santos
             </span>
           </a>
