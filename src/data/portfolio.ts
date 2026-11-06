@@ -409,7 +409,7 @@ export const experience: Experience[] = [
     description:
       "Oversees the company's day-to-day operations, manages teams and projects, and works closely with leadership on company-wide decisions. Also contributes directly to development, infrastructure, and other technical work when needed.",
     initials: "Pw",
-    accent: "#1d7a45",
+    accent: "#4bb479",
     links: [
       { label: "Website", href: "https://paddlewheel.org", kind: "site" },
       {
@@ -427,7 +427,7 @@ export const experience: Experience[] = [
     description:
       "Oversees day-to-day operations, manages the team, and contributes to product and organizational decisions. Works across the company to coordinate projects and ensure the platform continues to develop effectively.",
     initials: "Mo",
-    accent: "#b0450f",
+    accent: "#2d55b3",
     links: [
       { label: "Website", href: "https://monitry.net", kind: "site" },
       {
@@ -450,7 +450,7 @@ export const experience: Experience[] = [
     description:
       "Maintained and improved the Orbit HRM platform, keeping the platform up to date, accessible, and easy to use. Worked across the project on development, infrastructure, community needs, and contributor coordination, including reviewing issues and pull requests.",
     initials: "Or",
-    accent: "#5b4b8a",
+    accent: "#FF0099",
     links: [
       { label: "Website", href: "https://planetaryapp.us/", kind: "site" },
       {
