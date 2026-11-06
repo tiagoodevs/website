@@ -10,11 +10,12 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="px-6 pt-2 pb-10">
-      <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 text-center text-sm text-foreground/45 sm:flex-row sm:text-left">
-        <p>
-          {site.name} · Copyright {new Date().getFullYear()}
-        </p>
+    <footer className="px-6 pt-28 pb-20 border-t border-white/10">
+      <div className="mx-auto max-w-5xl flex flex-col items-center justify-between gap-10 text-center text-sm text-muted sm:flex-row sm:text-left">
+        <div className="flex items-center gap-2">
+          <span className="font-bold text-foreground">{site.shortName}</span>
+          <span className="text-xs">· {new Date().getFullYear()}</span>
+        </div>
 
         <ul className="flex items-center gap-1">
           {socials.map((social) => (
@@ -24,7 +25,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${site.name} on ${social.label}`}
-                className="flex size-8 items-center justify-center rounded-lg transition-colors hover:bg-card-hover hover:text-foreground"
+                className="flex size-8 items-center justify-center rounded-lg transition-colors hover:bg-card hover:text-foreground"
               >
                 {social.icon ? (
                   <IconResolve size={16} icon={social.icon} />
@@ -36,9 +37,9 @@ export default function Footer() {
           ))}
         </ul>
 
-        <p>
+        <p className="text-xs font-light">
           Made in <span className="text-foreground">🇵🇹</span> with{" "}
-          <span className="text-[#bd3859]" aria-label="love">
+          <span className="text-muted" aria-label="love">
             &lt;3
           </span>
         </p>

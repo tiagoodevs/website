@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { useRef, useEffect } from "react";
+import { gsap } from "@/lib/gsap";
 import { Globe } from "lucide-react";
 import { siDiscord, siGithub, siRoblox } from "simple-icons";
 import IconResolve from "@/lib/icons";
@@ -11,31 +12,6 @@ import {
   type Workplace,
   type WorkplaceDate,
 } from "@/content/workplaces";
-
-const easeOut = [0.22, 1, 0.36, 1] as const;
-
-const listVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.08,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 22, scale: 0.98 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.5,
-      ease: easeOut,
-    },
-  },
-};
 
 const MONTHS = [
   "Jan",
@@ -77,7 +53,7 @@ function WorkplaceLinkIcon({
       rel="noopener noreferrer"
       aria-label={label}
       onClick={(e) => e.stopPropagation()}
-      className="flex size-8 items-center justify-center rounded-lg text-foreground/40 transition-all duration-300 hover:scale-110 hover:bg-foreground/5 group-hover:text-white group-hover:hover:bg-white/15"
+      className="flex size-9 items-center justify-center rounded-xl text-muted hover:bg-brand/10 hover:text-brand transition-colors"
     >
       {children}
     </a>
@@ -91,121 +67,117 @@ function WorkplaceCard({ item }: { item: Workplace }) {
   );
 
   return (
-    <motion.li
-      variants={cardVariants}
-      style={{ "--brand": item.brandColor } as React.CSSProperties}
-      className="group relative flex flex-col overflow-hidden rounded-2xl bg-card/80 p-5 shadow-[0_1px_2px_rgba(0,0,0,0.03)] ring-1 ring-foreground/5 transition-colors duration-300 hover:bg-(--brand) sm:p-6"
-    >
+    <div className="rounded-20 border border-border bg-card p-6 hover:bg-card-hover hover:border-brand transition-all duration-300">
       <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <Image
             src={`/companies/${item.image}.png`}
             alt={item.company}
             width={36}
             height={36}
-            className="shrink-0 opacity-30 invert transition-all duration-300 group-hover:opacity-100 group-hover:invert-0 dark:opacity-70 dark:invert-0"
+            className="shrink-0 rounded-xl opacity-60 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition duration-500 group"
           />
-          <p className="text-xl text-foreground transition-colors duration-300 group-hover:text-white">
-            {item.role}{" "}
-            <span className="text-foreground/50 transition-colors duration-300 group-hover:text-white/50">
-              @
-            </span>{" "}
-            {item.company}
-          </p>
+          <div className="min-w-0">
+            <p className="text-base font-semibold text-foreground truncate">
+              {item.role}
+            </p>
+            <p className="text-xs text-muted truncate font-light">
+              @ {item.company}
+            </p>
+          </div>
         </div>
 
-        <p className="shrink-0 pt-0 font-mono text-xs tracking-wide whitespace-nowrap text-foreground/35 transition-colors duration-300 sm:pl-4 group-hover:text-white/55">
+        <p className="shrink-0 font-mono text-xs tracking-wide whitespace-nowrap text-muted">
           {dateRange(item)}
         </p>
       </div>
 
-      <p className="mt-3 text-sm leading-relaxed text-foreground/55 transition-colors duration-300 group-hover:text-white/75">
+      <p className="mt-4 text-sm leading-relaxed text-muted font-light">
         {item.description}
       </p>
 
       {hasLinks ? (
-        <div className="-ml-2 mt-4 flex items-center gap-1 border-t border-foreground/10 pt-3 transition-colors duration-300 group-hover:border-white/15">
+        <div className="mt-6 flex items-center gap-1.5 pt-4 border-t border-border/50">
           {links.website ? (
             <WorkplaceLinkIcon href={links.website} label={`${item.company} website`}>
-              <Globe size={16} strokeWidth={1.75} />
+              <Globe size={17} strokeWidth={1.75} />
             </WorkplaceLinkIcon>
           ) : null}
           {links.discord ? (
             <WorkplaceLinkIcon href={links.discord} label={`${item.company} Discord`}>
-              <IconResolve size={16} icon={siDiscord} />
+              <IconResolve size={17} icon={siDiscord} />
             </WorkplaceLinkIcon>
           ) : null}
           {links.roblox ? (
             <WorkplaceLinkIcon href={links.roblox} label={`${item.company} on Roblox`}>
-              <IconResolve size={16} icon={siRoblox} />
+              <IconResolve size={17} icon={siRoblox} />
             </WorkplaceLinkIcon>
           ) : null}
           {links.github ? (
             <WorkplaceLinkIcon href={links.github} label={`${item.company} GitHub`}>
-              <IconResolve size={16} icon={siGithub} />
+              <IconResolve size={17} icon={siGithub} />
             </WorkplaceLinkIcon>
           ) : null}
         </div>
       ) : null}
-    </motion.li>
+    </div>
   );
 }
 
 export default function Workplaces() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    gsap.from(containerRef.current, {
+      opacity: 0,
+      y: 30,
+      duration: 1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top 85%",
+        toggleActions: "play none none reverse",
+      },
+    });
+  }, []);
+
   return (
     <section
       id="workplaces"
-      className="relative scroll-mt-20 px-6 py-24 sm:py-32"
+      className="relative scroll-mt-24 px-6 py-32 sm:py-40 lg:py-48"
     >
-      <div className="mx-auto max-w-5xl">
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.55, ease: easeOut }}
-          className="max-w-xl text-left"
-        >
-          <p className="font-mono text-sm tracking-[0.18em] text-foreground/40 uppercase">
-            Experience
-          </p>
-          <h2 className="mt-3 font-sans text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-            Where I&apos;ve worked and where I still show up.
-          </h2>
-          <p className="mt-4 text-base leading-relaxed text-foreground/55 sm:text-[17px]">
-            Current roles first, past stops below.
-          </p>
-        </motion.div>
+      <div className="mx-auto max-w-6xl" ref={containerRef}>
+        <p className="section-kicker">Experience</p>
+        <h2 className="section-title">Where I&apos;ve worked and still show up.</h2>
+        <p className="section-subtitle mt-4 font-light">
+          Current roles first, past stops below.
+        </p>
 
-        <motion.ul
-          variants={listVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          className="mt-12 grid gap-4 sm:gap-5"
-        >
-          {currentWorkplaces.map((item) => (
-            <WorkplaceCard key={`${item.company}-${item.role}`} item={item} />
-          ))}
-        </motion.ul>
+        <div className="mt-20 space-y-16">
+          <div className="grid gap-6 lg:grid-cols-2">
+            {currentWorkplaces.map((item) => (
+              <WorkplaceCard key={`${item.company}-${item.role}`} item={item} />
+            ))}
+          </div>
 
-        {pastWorkplaces.length > 0 ? (
-          <>
-            <p className="mt-14 font-mono text-xs tracking-[0.18em] text-foreground/30 uppercase">
-              Past
-            </p>
-            <motion.ul
-              variants={listVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.1 }}
-              className="mt-5 grid gap-4 sm:gap-5"
-            >
-              {pastWorkplaces.map((item) => (
-                <WorkplaceCard key={`${item.company}-${item.role}`} item={item} />
-              ))}
-            </motion.ul>
-          </>
-        ) : null}
+          {pastWorkplaces.length > 0 ? (
+            <>
+              <div className="mt-8 flex items-center gap-2">
+                <span className="h-px w-16 bg-border" />
+                <p className="section-kicker">Past</p>
+              </div>
+              <div className="mt-8 grid gap-6 lg:grid-cols-2">
+                {pastWorkplaces.map((item) => (
+                  <WorkplaceCard
+                    key={`${item.company}-${item.role}`}
+                    item={item}
+                  />
+                ))}
+              </div>
+            </>
+          ) : null}
+        </div>
       </div>
     </section>
   );

@@ -1,38 +1,29 @@
 @import "tailwindcss";
 
-/*
- * Dark mode is class-driven (`.dark` on <html>) rather than media-driven so the
- * toggle can override the system preference. A blocking script in the root
- * layout sets the class before first paint to avoid a flash.
- */
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --bg: #fafafa;
-  --fg: #09090b;
-  --card: #ffffff;
-  --card-hover: #f4f4f5;
-  --border: #e4e4e7;
-  --muted: #71717a;
-  --chip: #f5f5f7;
-  --surface: #f7f6f3;
-  --brand: #244d3e;
-  --grid-line: rgba(29, 29, 31, 0.055);
-  --glow: rgba(247, 246, 243, 0.55);
+  --bg: #225933;
+  --fg: #f0fdf4;
+  --muted: #a7d3b5;
+  --card: rgba(255, 255, 255, 0.06);
+  --card-hover: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.14);
+  --ring: #86efac;
+  --brand: #86efac;
+  --brand-soft: rgba(134, 239, 172, 0.15);
 }
 
 .dark {
-  --bg: #09090b;
-  --fg: #fafafa;
-  --card: #131316;
-  --card-hover: #1f1f23;
-  --border: #27272a;
-  --muted: #a1a1aa;
-  --chip: #1b1b1f;
-  --surface: #141417;
-  --brand: #2d5f4c;
-  --grid-line: rgba(250, 250, 250, 0.07);
-  --glow: rgba(20, 20, 23, 0.6);
+  --bg: #225933;
+  --fg: #f0fdf4;
+  --muted: #a7d3b5;
+  --card: rgba(255, 255, 255, 0.06);
+  --card-hover: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.14);
+  --ring: #86efac;
+  --brand: #86efac;
+  --brand-soft: rgba(134, 239, 172, 0.15);
 }
 
 @theme inline {
@@ -42,11 +33,12 @@
   --color-card-hover: var(--card-hover);
   --color-border: var(--border);
   --color-muted: var(--muted);
-  --color-chip: var(--chip);
-  --color-surface: var(--surface);
   --color-brand: var(--brand);
+  --color-brand-soft: var(--brand-soft);
+  --color-ring: var(--ring);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-mono);
+  --font-yarndings: var(--font-yarndings);
 }
 
 html {
@@ -59,41 +51,18 @@ body {
   font-family: var(--font-inter), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
-/* Keyboard focus is always visible; pointer focus is not. */
 :focus-visible {
-  outline: 2px solid var(--fg);
+  outline: 2px solid var(--ring);
   outline-offset: 2px;
   border-radius: 6px;
 }
 
 ::selection {
-  background: var(--fg);
-  color: var(--bg);
-}
-
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--muted);
+  background: var(--brand);
+  color: #022c22;
 }
 
 .skip-link {
@@ -113,21 +82,98 @@ body {
   top: 1rem;
 }
 
-/*
- * Framer Motion is additionally configured with reducedMotion="user", which
- * covers transform/layout animations. This block covers the CSS-driven ones.
- */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Minimal card — no gradients, solid borders */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+
+/* 30fps stepped symbol animation (Yarndings 12) — subtle texture */
+.yarndings-symbol {
+  font-family: var(--font-yarndings), "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+  pointer-events: none;
+  user-select: none;
+  color: var(--brand);
+  opacity: 0.25;
+}
+
+.yarndings-float {
+  animation-name: yarndings-float;
+  animation-iteration-count: infinite;
+  /* duration, delay and steps() are set inline per symbol */
+}
+
+@keyframes yarndings-float {
+  0%   { transform: translateY(0) rotate(0deg); }
+  50%  { transform: translateY(-14px) rotate(8deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* Section typography */
+.section-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.section-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--fg);
+}
+.section-subtitle {
+  color: var(--muted);
+  font-size: 1rem;
+  max-width: 480px;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+/* Soft leaf blobs — no gradients, solid color blurs */
+.leaf-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(96px);
+  z-index: -1;
+  opacity: 0.35;
+  animation: leaf-drift 20s ease-in-out infinite alternate;
+}
+.leaf-blob-1 {
+  background: #164528;
+  width: 600px; height: 600px;
+  top: -10%; left: -10%;
+  animation-duration: 24s;
+}
+.leaf-blob-2 {
+  background: #164528;
+  width: 500px; height: 500px;
+  bottom: -10%; right: -10%;
+  animation-duration: 18s;
+  animation-delay: -7s;
+}
+.leaf-blob-3 {
+  background: #164528;
+  width: 400px; height: 400px;
+  top: 40%; left: 60%;
+  animation-duration: 16s;
+  animation-delay: -11s;
+}
+
+@keyframes leaf-drift {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(50px, -70px) scale(1.05); }
 }

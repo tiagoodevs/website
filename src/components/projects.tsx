@@ -1,38 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { useRef, useEffect } from "react";
+import { gsap } from "@/lib/gsap";
 import { ArrowUpRight } from "lucide-react";
 import { siDiscord, siGithub, siRoblox } from "simple-icons";
 import IconResolve from "@/lib/icons";
-import { toKebabCase } from "@/lib/utils";
 import { projects, type Project, type ProjectLinkKey } from "@/content/projects";
-
-const easeOut = [0.22, 1, 0.36, 1] as const;
-
-const listVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.06,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 22, scale: 0.98 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.5,
-      ease: easeOut,
-    },
-  },
-};
 
 const linkMeta: Record<
   ProjectLinkKey,
@@ -43,7 +18,7 @@ const linkMeta: Record<
     icon: <IconResolve size={18} icon={siGithub} />,
   },
   discord: {
-    label: (title) => `${title}'s Discord server`,
+    label: (title) => `${title}&apos;s Discord server`,
     icon: <IconResolve size={18} icon={siDiscord} />,
   },
   roblox: {
@@ -56,24 +31,95 @@ const linkMeta: Record<
   },
 };
 
-const linkOrder: ProjectLinkKey[] = ["github", "discord", "roblox", "demo"];
+const linkOrder: ProjectLinkKey[] = ["github", "demo", "discord", "roblox"];
 
-function ProjectCard({ project }: { project: Project }) {
-  const [open, setOpen] = useState(false);
-  const hasDetail = Boolean(project.detail && project.detail !== project.summary);
+export default function Projects() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    gsap.from(containerRef.current, {
+      opacity: 0,
+      y: 30,
+      duration: 1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top 85%",
+        toggleActions: "play none none reverse",
+      },
+    });
+  }, []);
 
   return (
-    <motion.li
-      id={toKebabCase(project.slug)}
-      variants={cardVariants}
-      className="flex flex-col rounded-2xl bg-card/80 p-6 shadow-[0_1px_2px_rgba(0,0,0,0.03)] ring-1 ring-foreground/5 sm:p-7"
+    <section
+      id="projects"
+      className="relative scroll-mt-24 px-6 py-32 sm:py-40 lg:py-48"
     >
-      <div className="flex items-start justify-between gap-3">
-        <h3 className="font-sans text-xl font-semibold tracking-tight text-foreground">
-          <Link href={`/projects/${project.slug}`} className="hover:underline">
+      <div className="mx-auto max-w-6xl" ref={containerRef}>
+        <p className="section-kicker">Projects</p>
+        <h2 className="section-title">Things I&apos;ve built and shipped.</h2>
+        <p className="section-subtitle mt-4 font-light">
+          SaaS products, open-source tools, bots, and systems — from idea to
+          production.
+        </p>
+
+        <div className="mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projects.map((project, i) => (
+            <ProjectCard
+              key={project.slug}
+              project={project}
+              featured={i < 2}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ProjectCard({
+  project,
+  featured,
+}: Readonly<{
+  project: Project;
+  featured: boolean;
+}>) {
+  const router = useRouter();
+  const hasDetail = Boolean(project.detail && project.detail !== project.summary);
+
+  function handleClick() {
+    router.push(`/projects/${project.slug}`);
+  }
+
+  function handleKeyDown(event: React.KeyboardEvent) {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      handleClick();
+    }
+  }
+
+  return (
+    <div
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      role="link"
+      tabIndex={0}
+      aria-label={`Open ${project.title} project`}
+      className={`group rounded-20 border border-border bg-card hover:bg-card-hover hover:border-brand transition-all duration-300 cursor-pointer ${
+        featured ? "lg:col-span-2" : ""
+      }`}
+    >
+      <div className="flex items-start justify-between gap-3 mb-4">
+        <Link
+          href={`/projects/${project.slug}`}
+          onClick={(e) => e.stopPropagation()}
+          className="text-foreground"
+        >
+          <h3 className={`font-sans font-semibold tracking-tight ${featured ? "text-xl" : "text-lg"}`}>
             {project.title}
-          </Link>
-        </h3>
+          </h3>
+        </Link>
 
         <div className="flex shrink-0 items-center gap-1.5">
           {linkOrder.map((key) => {
@@ -86,7 +132,8 @@ function ProjectCard({ project }: { project: Project }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={linkMeta[key].label(project.title)}
-                className="rounded-lg p-2 text-foreground/40 transition-colors hover:bg-foreground/5 hover:text-foreground"
+                className="rounded-lg p-2 text-foreground/40 hover:bg-foreground/5 hover:text-foreground transition-colors"
+                onClick={(e) => e.stopPropagation()}
               >
                 {linkMeta[key].icon}
               </a>
@@ -95,85 +142,27 @@ function ProjectCard({ project }: { project: Project }) {
         </div>
       </div>
 
-      <p className="mt-3 text-[15px] leading-relaxed text-foreground/65 sm:text-base">
+      <p className={`text-sm leading-relaxed text-muted mb-6 font-light line-clamp-${featured ? 4 : 3}`}>
         {project.summary}
       </p>
 
-      <AnimatePresence initial={false}>
-        {hasDetail && open ? (
-          <motion.p
-            key="detail"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.28, ease: easeOut }}
-            className="overflow-hidden text-[15px] leading-relaxed text-foreground/50 sm:text-base"
-          >
-            <span className="mt-3 block">{project.detail}</span>
-          </motion.p>
-        ) : null}
-      </AnimatePresence>
-
-      {hasDetail ? (
-        <button
-          type="button"
-          onClick={() => setOpen((value) => !value)}
-          aria-expanded={open}
-          className="mt-3 self-start text-sm font-medium text-foreground/45 transition-colors hover:text-foreground/70"
-        >
-          {open ? "Show less" : "Read more"}
-        </button>
-      ) : null}
-
-      <ul className="mt-5 flex flex-wrap gap-2">
+      <div className="mt-auto flex flex-wrap gap-2">
         {project.skills.map((skill) => (
-          <li
+          <span
             key={skill}
-            className="rounded-full bg-chip px-2.5 py-1 text-xs font-medium text-foreground/55"
+            className="rounded-full border border-border bg-card px-3 py-0.5 text-xs font-medium text-muted hover:bg-card-hover transition-colors"
           >
             {skill}
-          </li>
+          </span>
         ))}
-      </ul>
-    </motion.li>
-  );
-}
-
-export default function Projects() {
-  return (
-    <section id="projects" className="relative scroll-mt-20 px-6 py-24 sm:py-32">
-      <div className="mx-auto max-w-5xl">
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.55, ease: easeOut }}
-          className="max-w-xl text-left"
-        >
-          <p className="font-mono text-sm tracking-[0.18em] text-foreground/40 uppercase">
-            Projects
-          </p>
-          <h2 className="mt-3 font-sans text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-            Things I&apos;ve built and shipped.
-          </h2>
-          <p className="mt-4 text-base leading-relaxed text-foreground/55 sm:text-[17px]">
-            SaaS products, open-source tools, bots, and systems — from idea to
-            production.
-          </p>
-        </motion.div>
-
-        <motion.ul
-          variants={listVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.08 }}
-          className="mt-12 grid gap-4 sm:grid-cols-2 sm:gap-5"
-        >
-          {projects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
-          ))}
-        </motion.ul>
       </div>
-    </section>
+
+      {hasDetail ? (
+        <div className="mt-6 flex items-center gap-2 text-xs font-medium text-muted group-hover:text-brand transition-colors">
+          Read case study
+          <ArrowUpRight size={14} strokeWidth={1.75} />
+        </div>
+      ) : null}
+    </div>
   );
 }

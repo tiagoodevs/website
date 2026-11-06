@@ -1,86 +1,75 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { useRef, useEffect } from "react";
+import { gsap } from "@/lib/gsap";
 import { toKebabCase } from "@/lib/utils";
 import { aboutNotes, aboutParagraphs } from "@/content/about";
 import { site } from "@/content/site";
 
-const easeOut = [0.22, 1, 0.36, 1] as const;
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 22 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: 0.08 + i * 0.1,
-      duration: 0.55,
-      ease: easeOut,
-    },
-  }),
-};
-
 export default function About() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    gsap.from(containerRef.current, {
+      opacity: 0,
+      y: 30,
+      duration: 1,
+      ease: "power3.out",
+    });
+  }, []);
+
   return (
-    <section id="about" className="relative scroll-mt-20 px-6 py-24 sm:py-32">
-      <div className="mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:gap-16">
-        <div className="flex flex-col items-start text-left">
-          <motion.p
-            custom={1}
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.4 }}
-            className="text-sm font-mono tracking-[0.18em] text-foreground/40 uppercase"
-          >
-            About me
-          </motion.p>
+    <section id="about" className="relative scroll-mt-24 px-6 py-32 sm:py-40 lg:py-48">
+      <div className="mx-auto max-w-6xl" ref={containerRef}>
+        <div className="grid gap-16 md:gap-24 lg:grid-cols-[1fr_1fr] lg:gap-32 items-start">
+          <div className="relative">
+            <div className="relative rounded-24 overflow-hidden border border-border bg-card">
+              <Image
+                src={site.avatar}
+                alt={site.name}
+                width={500}
+                height={500}
+                className="w-full h-auto block rounded-24 object-cover"
+                priority
+              />
+            </div>
+            <span className="absolute -bottom-8 -left-8 inline-flex items-center gap-2 rounded-xl bg-card border border-brand/40 px-3 py-2 text-xs font-mono font-semibold text-foreground shadow-xl">
+              <span className="w-2 h-2 rounded-full bg-brand" />
+              Available for work
+            </span>
+          </div>
 
-          <motion.h2
-            custom={2}
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.4 }}
-            className="mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
-          >
-            Building products that feel clear and considered.
-          </motion.h2>
+          <div className="space-y-6">
+            <p className="section-kicker">About me</p>
+            <h2 className="section-title">
+              Building products that feel clear and considered.
+            </h2>
+            <p className="section-subtitle mt-4 font-light">
+              I&apos;m a full-stack developer and multimedia student who ships modern web
+              products end to end — polished interfaces, solid APIs, and reliable
+              deployments.
+            </p>
 
-          <motion.div
-            custom={3}
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            className="mt-5 space-y-4 text-base leading-relaxed text-foreground/60 sm:text-[17px]"
-          >
-            {aboutParagraphs.map((paragraph) => (
-              <p key={paragraph.slice(0, 24)}>{paragraph}</p>
-            ))}
-          </motion.div>
+            <div className="mt-10 space-y-6 text-base leading-relaxed text-muted font-light">
+              {aboutParagraphs.map((paragraph, i) => (
+                <p key={i}>{paragraph}</p>
+              ))}
+            </div>
 
-          <motion.ul
-            custom={4}
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            className="mt-7 flex flex-wrap gap-2"
-          >
-            {aboutNotes.map((item) => (
-              <li
-                key={item}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-card/80 px-3 py-1 font-mono text-sm text-foreground/70 shadow-[0_1px_2px_rgba(0,0,0,0.03)] ring-1 ring-foreground/5"
-              >
-                <span aria-hidden className="text-lg font-bold">
-                  #
+            <div className="mt-8 flex flex-wrap gap-2">
+              {aboutNotes.map((item) => (
+                <span
+                  key={item}
+                  className="inline-flex items-center gap-2 rounded-xl bg-card border border-border px-3 py-1.5 font-mono text-xs font-semibold text-foreground hover:bg-card-hover transition-colors"
+                >
+                  <span aria-hidden className="text-muted font-bold">#</span>
+                  {toKebabCase(item)}
                 </span>
-                {toKebabCase(item)}
-              </li>
-            ))}
-          </motion.ul>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono, Yarndings_12 } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import Providers from "@/components/providers";
+import SmoothScroll from "@/components/smooth-scroll";
 import { ConsoleWarning } from "@/components/warning";
 import { site } from "@/content/site";
 import { themeScript } from "@/lib/theme";
@@ -16,6 +17,13 @@ const inter = Inter({
 const mono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
+  display: "swap",
+});
+
+/** Yarndings 12 — dingbat/symbol font used for the 30fps symbol layer. */
+const yarndings = Yarndings_12({
+  variable: "--font-yarndings",
+  weight: "400",
   display: "swap",
 });
 
@@ -73,8 +81,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fafafa" },
-    { media: "(prefers-color-scheme: dark)", color: "#09090b" },
+    { media: "(prefers-color-scheme: light)", color: "#0a0a0a" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
   ],
 };
 
@@ -124,14 +132,16 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${mono.variable} h-full antialiased`}
+      className={`${inter.variable} ${mono.variable} ${yarndings.variable} h-full antialiased`}
     >
       <body className="min-h-full">
         <script
           dangerouslySetInnerHTML={{ __html: themeScript }}
         />
         <ConsoleWarning />
-        <Providers>{children}</Providers>
+        <SmoothScroll>
+          <Providers>{children}</Providers>
+        </SmoothScroll>
         <Analytics />
         <script
           type="application/ld+json"

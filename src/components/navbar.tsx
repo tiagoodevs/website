@@ -13,7 +13,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => setScrolled(window.scrollY > 10);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -32,9 +32,9 @@ export default function Navbar() {
     <header
       className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${
         scrolled
-          ? "border-border bg-background/80 backdrop-blur-xl"
+          ? "border-white/10 bg-green-900/70 backdrop-blur-md"
           : "border-transparent bg-transparent"
-      }`}
+      } dark:${scrolled ? "border-white/10 bg-[#225933]/80 backdrop-blur-md" : ""}`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link
@@ -49,7 +49,7 @@ export default function Navbar() {
             <a
               key={section.id}
               href={`#${section.id}`}
-              className="rounded-full px-3 py-1.5 text-sm font-medium text-foreground/60 transition-colors hover:bg-card-hover hover:text-foreground"
+              className="rounded-full px-3 py-1.5 text-sm font-medium text-foreground/60 transition-colors hover:bg-card hover:text-foreground"
             >
               {section.label}
             </a>
@@ -60,7 +60,7 @@ export default function Navbar() {
           <ThemeToggle />
           <a
             href="#contact"
-            className="hidden rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition-opacity hover:opacity-80 sm:inline-flex"
+            className="hidden rounded-full border border-border px-4 py-2 text-xs font-semibold text-foreground hover:bg-card transition-colors sm:inline-flex"
           >
             Contact
           </a>
@@ -85,7 +85,7 @@ export default function Navbar() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className="overflow-hidden border-t border-border bg-background/95 backdrop-blur-xl md:hidden"
+            className="overflow-hidden border-t border-border bg-[#225933]/95 backdrop-blur-md md:hidden"
           >
             <nav aria-label="Mobile" className="flex flex-col gap-1 px-6 py-4">
               {sections.map((section) => (
@@ -109,7 +109,7 @@ export default function Navbar() {
               <a
                 href="#contact"
                 onClick={() => setMobileOpen(false)}
-                className="mt-2 rounded-full bg-foreground px-4 py-2.5 text-center text-sm font-semibold text-background"
+                className="mt-2 rounded-full border border-border px-4 py-2.5 text-center text-xs font-semibold text-foreground"
               >
                 Contact
               </a>

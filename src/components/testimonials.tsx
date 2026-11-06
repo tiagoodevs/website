@@ -1,99 +1,76 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { useRef, useEffect } from "react";
+import { gsap } from "@/lib/gsap";
 import { testimonials } from "@/content/testimonials";
 
-const easeOut = [0.22, 1, 0.36, 1] as const;
-
-const listVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.08,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 22, scale: 0.98 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.5,
-      ease: easeOut,
-    },
-  },
-};
-
 export default function Testimonials() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    gsap.from(containerRef.current, {
+      opacity: 0,
+      y: 30,
+      duration: 1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top 85%",
+        toggleActions: "play none none reverse",
+      },
+    });
+  }, []);
+
   return (
     <section
       id="testimonials"
-      className="relative scroll-mt-20 px-6 py-24 sm:py-32"
+      className="relative scroll-mt-24 px-6 py-32 sm:py-40 lg:py-48"
     >
-      <div className="mx-auto max-w-5xl">
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.4 }}
-          transition={{ duration: 0.55, ease: easeOut }}
-          className="max-w-xl text-left"
-        >
-          <p className="font-mono text-sm tracking-[0.18em] text-foreground/40 uppercase">
-            Testimonials
-          </p>
-          <h2 className="mt-3 font-sans text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-            What people say when we work together.
-          </h2>
-          <p className="mt-4 text-base leading-relaxed text-foreground/55 sm:text-[17px]">
-            A few kind words from people I&apos;ve built with — products, systems,
-            and everything in between.
-          </p>
-        </motion.div>
+      <div className="mx-auto max-w-6xl" ref={containerRef}>
+        <p className="section-kicker">Testimonials</p>
+        <h2 className="section-title">What people say when we work together.</h2>
+        <p className="section-subtitle mt-4 font-light">
+          A few kind words from people I&apos;ve built with — products, systems,
+          and everything in between.
+        </p>
 
-        <motion.ul
-          variants={listVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          className="mt-12 grid gap-4 sm:grid-cols-2 sm:gap-5"
-        >
+        <div className="mt-20 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((item) => (
-            <motion.li
-              key={`${item.name}-${item.company}`}
-              variants={cardVariants}
-              className="flex flex-col rounded-2xl bg-card/80 p-6 shadow-[0_1px_2px_rgba(0,0,0,0.03)] ring-1 ring-foreground/5 sm:p-7"
-            >
-              <p className="flex-1 text-[15px] leading-relaxed text-foreground/70 sm:text-base">
-                &ldquo;{item.quote}&rdquo;
-              </p>
-
-              <div className="mt-6 flex items-center gap-3">
-                <Image
-                  src={`/profiles/${item.img}`}
-                  alt=""
-                  width={40}
-                  height={40}
-                  loading="lazy"
-                  className="size-10 shrink-0 rounded-full object-cover"
-                />
-                <div className="min-w-0 text-left">
-                  <p className="truncate text-sm font-medium text-foreground">
-                    {item.name}
-                  </p>
-                  <p className="truncate text-sm text-foreground/45">
-                    {item.role} · {item.company}
-                  </p>
-                </div>
-              </div>
-            </motion.li>
+            <TestimonialCard key={`${item.name}-${item.company}`} item={item} />
           ))}
-        </motion.ul>
+        </div>
       </div>
     </section>
+  );
+}
+
+function TestimonialCard({ item }: { item: (typeof testimonials)[number] }) {
+  return (
+    <div className="rounded-20 border border-border bg-card p-8 hover:bg-card-hover hover:border-brand transition-all duration-300">
+      <div className="flex items-center gap-3 mb-6">
+        <Image
+          src={`/profiles/${item.img}`}
+          alt=""
+          width={36}
+          height={36}
+          className="size-9 shrink-0 rounded-full object-cover"
+          loading="lazy"
+        />
+        <div className="min-w-0 text-left">
+          <p className="text-sm font-semibold text-foreground truncate">
+            {item.name}
+          </p>
+          <p className="text-xs text-muted truncate font-light">
+            {item.role} · {item.company}
+          </p>
+        </div>
+      </div>
+
+      <p className="text-lg leading-relaxed text-foreground/80 italic font-light">
+        &ldquo;{item.quote}&rdquo;
+      </p>
+    </div>
   );
 }
