@@ -482,7 +482,7 @@ export const companies = [
 ];
 
 export const stats = [
-  { value: String(projects).padStart(2, "0"), label: "Projects shipped" },
-  { value: String(profile.currently).padStart(2, "0"), label: "Teams and counting" },
-  { value: String(testimonials).padStart(2, "0"), label: "Kind words" },
+  { value: String(projects.length).padStart(2, "0"), label: "Projects shipped" },
+  { value: String(profile.currently.length).padStart(2, "0"), label: "Teams and counting" },
+  { value: String(testimonials.length).padStart(2, "0"), label: "Kind words" },
 ];
