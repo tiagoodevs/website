@@ -344,7 +344,7 @@ export const projects: Project[] = [
     description:
       "A personal portfolio built with clean UI and smooth motion — designed to get out of the way and let the work speak.",
     tags: ["React", "Next.js", "Tailwind"],
-    links: [{ label: "GitHub", href: profile.github, kind: "github" }],
+    links: [{ label: "GitHub", href: "https://github.com/tiagoodevs/website", kind: "github" }],
     glyph: "TS",
     accent: "#62605c",
     accentAlt: "#c4c2bd",
