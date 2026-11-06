@@ -64,7 +64,7 @@ export const profile = {
   location: "Portugal",
   email: "hello@breaddevv.cc",
   discord: "https://discord.com/users/901562525294927932",
-  github: "https://github.com/breadddevv",
+  github: "https://github.com/tiagoodevs",
   linkedin: "https://www.linkedin.com/in/tiago-santos-b72b463ba/",
   tagline: "Building products that feel clear and considered.",
   intro:
@@ -182,7 +182,7 @@ export const projects: Project[] = [
         href: "https://discord.gg/mWqdZmEkDc",
         kind: "discord",
       },
-      { label: "Demo", href: "https://demo.planetaryapp.us", kind: "site" },
+      { label: "Demo", href: "https://demo.planetaryapp.cloud", kind: "site" },
     ],
     glyph: "Or",
     accent: "#FF0099",
@@ -482,7 +482,7 @@ export const companies = [
 ];
 
 export const stats = [
-  { value: "08", label: "Projects shipped" },
-  { value: "03", label: "Teams and counting" },
-  { value: "08", label: "Kind words" },
+  { value: String.prototype.padStart(2, testimonials.length.toString()), label: "Projects shipped" },
+  { value: String.prototype.padStart(2, testimonials.length.toString()), label: "Teams and counting" },
+  { value: String.prototype.padStart(2, testimonials.length.toString()), label: "Kind words" },
 ];
